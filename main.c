@@ -10,15 +10,11 @@
 #include "app_timer_appsh.h"
 #include "app_scheduler.h"
 #include "app_util_platform.h"
-
-#define APP_TIMER_PRESCALER             0                                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            (2 + BSP_APP_TIMERS_NUMBER)                 /**< Maximum number of simultaneously created timers. */
-#define APP_TIMER_OP_QUEUE_SIZE         4                                           /**< Size of timer operation queues. */
+#include "timer_handler.h"
 
 #define UART_TX_BUF_SIZE                256                                         /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE                256                                         /**< UART RX buffer size. */
 
-#define SCHED_MAX_EVENT_DATA_SIZE       sizeof(app_timer_event_t)                   /**< Maximum size of scheduler events. Note that scheduler BLE stack events do not contain any data, as the events are being pulled from the stack in the event handler. */
 #define SCHED_QUEUE_SIZE                10                                          /**< Maximum number of events in the scheduler queue. */
 
 
@@ -63,7 +59,10 @@ void uart_event_handle(app_uart_evt_t * p_event)
             if (data_array[index - 1] == 10)
             {
                 printf("%s \n",data_array);
-                morse_generate((char*)data_array, APP_TIMER_PRESCALER);
+                printf("index = %d\n", index);
+                morse_generate((char*)data_array, index);
+                index = 0;
+                memset(data_array,0,sizeof(data_array));
             }
             break;    
         case APP_UART_COMMUNICATION_ERROR:
@@ -127,7 +126,7 @@ void buttons_leds_init(void)
  */
 static void scheduler_init(void)
 {
-    APP_SCHED_INIT(SCHED_MAX_EVENT_DATA_SIZE, SCHED_QUEUE_SIZE);
+    APP_SCHED_INIT(APP_TIMER_SCHED_EVT_SIZE, SCHED_QUEUE_SIZE);
 }
 
 /**@brief Application main function.
@@ -137,18 +136,19 @@ int main(void)
     //uint32_t err_code;
     
     // Initialize.
-    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, true);
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    
     uart_init();
     scheduler_init();
+    timer_init();
     printf("hi hello\n");
     buttons_leds_init();
-    morse_init();
+    
         
     // Enter main loop.
     for (;;)
     {
         //power_manage();
+        app_sched_execute();
     }
 }
 

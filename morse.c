@@ -4,39 +4,26 @@
 #include "btn_led_handler.h"
 #include "nrf_drv_gpiote.h"
 #include "nrf_delay.h"
+#include "timer_handler.h"
 
 morse_code_t morse_code = INVALID;
 morse_data_t morse_data;
 uint16_t get_char_morse(char data);
 
-void morse_generate(char * data_array, uint32_t m_prescaler)
+void morse_generate(char * data_array, uint8_t index)
 {
     for(int i=0 ; i<(strlen(data_array)-1) ; i++)
     {
         morse_data.data[i] = get_char_morse(data_array[i]);
         printf("%c = %d\n", data_array[i], morse_data.data[i]);
     }
-    uint32_t err_code = app_timer_start(morse_timer_id, APP_TIMER_TICKS(25, m_prescaler) , &morse_data.data);
-    printf("error = %d\n",err_code);
-//    for(int i = morse_code; i>0; )
-//    {
-//        printf("%d\n", i);
-//        uint8_t reminder = i%10;
-//        
-//        if(reminder == 1)
-//        {
-//            printf("1\n");
-//        }
-//        else if(reminder == 2)
-//        {
-//            printf("2\n");
-//        }
-//    }
+    morse_data.index = index;
+    uint32_t err_code = app_timer_start(morse_timer_id, APP_TIMER_TICKS(500, APP_TIMER_PRESCALER) , NULL);
 }
 
-void morse_init()
+void morse_init(void * p_context)
 {
-    app_timer_create(&morse_timer_id, APP_TIMER_MODE_SINGLE_SHOT, morse_led_indication);
+   printf("hi"); 
 }
 uint16_t get_char_morse(char data)
 {

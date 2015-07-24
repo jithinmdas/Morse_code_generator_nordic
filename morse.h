@@ -39,12 +39,11 @@ extern morse_code_t morse_code;
 typedef struct
 {
     uint16_t data[100];
+    uint8_t index;
 } morse_data_t;
 extern morse_data_t morse_data;
 
-static app_timer_id_t  morse_timer_id;
-
-void morse_generate(char * data, uint32_t m_prescaler);
-void morse_init(void);
+void morse_generate(char * data, uint8_t index);
+void morse_init(void * p_context);
 
 #endif // MORSE_H

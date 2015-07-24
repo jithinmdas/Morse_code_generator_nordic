@@ -20,29 +20,49 @@ void btn_led_init(uint32_t prescaler)
     err_code = nrf_drv_gpiote_init();
     APP_ERROR_CHECK(err_code);
     
-    nrf_drv_gpiote_out_config_t out_config = GPIOTE_CONFIG_OUT_SIMPLE(false);    
+    nrf_drv_gpiote_out_config_t out_config = GPIOTE_CONFIG_OUT_SIMPLE(true);    
     err_code = nrf_drv_gpiote_out_init(LED_ADV, &out_config);
     APP_ERROR_CHECK(err_code);
 }
 
-void morse_led_indication(void * p_variable)
+void morse_led_indication(void * index_pointer)
 {
-    printf("im here");
-    for(int j = 0; j<sizeof(morse_data.data); j++)
+    printf("morse code = ");
+    
+    for(int j = 0; j<(morse_data.index - 1); j++)
     {
-        for(int i = morse_data.data[j]; i>0; )
+        uint16_t deviser = 1000;
+        
+        for(int i = morse_data.data[j]; (i>0)&(deviser>0); )
         {
-            printf("%d\n", i);
-            uint8_t reminder = i%10;
+            uint16_t reminder = i % deviser;
+            uint8_t result = i / deviser;           
+            i = reminder;
+            deviser /= 10;
             
-            if(reminder == 1)
+            if(result == 1)
             {
-                printf("1\n");
+                printf("%d", result);
+                nrf_drv_gpiote_out_clear(LED_ADV);
+                nrf_delay_ms(300);
+                nrf_drv_gpiote_out_set(LED_ADV);
             }
-            else if(reminder == 2)
+            else if(result == 2)
             {
-                printf("2\n");
+                printf("%d", result);
+                nrf_drv_gpiote_out_clear(LED_ADV);
+                nrf_delay_ms(1000);
+                nrf_drv_gpiote_out_set(LED_ADV);
             }
+            else
+            {
+                continue;
+            }
+            
+            nrf_delay_ms(400);
         }
+        printf(" ");
+        nrf_delay_ms(1500);
     }
+    printf("\n");
 }

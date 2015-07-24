@@ -28,3 +28,4 @@
 .\objects\morse.o: E:\workspace\Keil\Nordic\Morse_code_generator_nordic\RTE\nRF_Drivers\nRF51422_xxAC\nrf_drv_config.h
 .\objects\morse.o: C:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_Libraries\3.0.0\util\sdk_errors.h
 .\objects\morse.o: C:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_Drivers\3.0.0\hal\nrf_delay.h
+.\objects\morse.o: timer_handler.h

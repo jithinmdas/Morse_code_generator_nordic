@@ -32,3 +32,4 @@
 .\objects\main.o: morse.h
 .\objects\main.o: E:\workspace\Keil\Nordic\Morse_code_generator_nordic\RTE\nRF_Libraries\nRF51422_xxAC\app_timer_appsh.h
 .\objects\main.o: E:\workspace\Keil\Nordic\Morse_code_generator_nordic\RTE\nRF_Libraries\nRF51422_xxAC\app_scheduler.h
+.\objects\main.o: timer_handler.h
