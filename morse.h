@@ -1,9 +1,17 @@
+/** @file morse.h
+ * @auther Jithin M Das
+ *
+ * @brief Hex file of morse.c
+ * 
+ */
+ 
 #ifndef MORSE_H
 #define MORSE_H
 
 #include <stdint.h>
 #include "app_timer.h"
 
+/**@brief Morse code for different alphabets. */
 typedef enum
 {
     A = 12,
@@ -36,6 +44,7 @@ typedef enum
 } morse_code_t;
 extern morse_code_t morse_code;
 
+/**@brief Data from UART. */
 typedef struct
 {
     uint16_t data[100];
@@ -43,7 +52,13 @@ typedef struct
 } morse_data_t;
 extern morse_data_t morse_data;
 
+/**@brief   Function for calculating morse code for the string.
+ *
+ * @details This function will receive a data array and converts it to morse code and triggers the indication
+ * 
+ * @param[in]   data    Character array of data from UART
+ * @param[in]   index   Index of last character in the array
+ */
 void morse_generate(char * data, uint8_t index);
-void morse_init(void * p_context);
 
 #endif // MORSE_H

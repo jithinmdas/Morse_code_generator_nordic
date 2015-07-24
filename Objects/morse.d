@@ -9,7 +9,7 @@
 .\objects\morse.o: C:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_SoftDevice_S110\8.0.1\headers\nrf_error.h
 .\objects\morse.o: C:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_Libraries\3.0.0\util\app_util.h
 .\objects\morse.o: C:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_DeviceFamilyPack\8.0.3\Device\Include\compiler_abstraction.h
-.\objects\morse.o: btn_led_handler.h
+.\objects\morse.o: led_handler.h
 .\objects\morse.o: C:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_Examples\8.1.1\bsp\bsp.h
 .\objects\morse.o: C:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_Examples\8.1.1\bsp\boards.h
 .\objects\morse.o: C:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_Drivers\3.0.0\hal\nrf_gpio.h

@@ -1,69 +1,47 @@
+/** @file main.c
+ * @auther Jithin M Das
+ *
+ * @brief Main file of Morse_Code_Generator
+ * 
+ */
+ 
 #include <stdint.h>
 #include <string.h>
 #include "nordic_common.h"
 #include "app_timer.h"
-#include "app_button.h"
 #include "app_uart.h"
 #include "bsp.h"
-#include "btn_led_handler.h"
+#include "led_handler.h"
 #include "morse.h"
 #include "app_timer_appsh.h"
 #include "app_scheduler.h"
-#include "app_util_platform.h"
 #include "timer_handler.h"
 
 #define UART_TX_BUF_SIZE                256                                         /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE                256                                         /**< UART RX buffer size. */
-
 #define SCHED_QUEUE_SIZE                10                                          /**< Maximum number of events in the scheduler queue. */
-
-
-/**@brief Function for putting the chip into sleep mode.
- *
- * @note This function will not return.
- */
-//static void sleep_mode_enter(void)
-//{
-//    uint32_t err_code;
-////    uint32_t err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-////    APP_ERROR_CHECK(err_code);
-
-////    // Prepare wakeup buttons.
-////    err_code = bsp_btn_ble_sleep_mode_prepare();
-////    APP_ERROR_CHECK(err_code);
-
-//    // Go to system-off mode (this function will not return; wakeup will cause a reset).
-//    err_code = sd_power_system_off();
-//    APP_ERROR_CHECK(err_code);
-//}
 
 /**@brief   Function for handling app_uart events.
  *
  * @details This function will receive a single character from the app_uart module and append it to 
- *          a string. The string will be be sent over BLE when the last character received was a 
- *          'new line' i.e '\n' (hex 0x0D) or if the string has reached a length of 
- *          @ref MORSE_MAX_DATA_LENGTH.
+ *          a string. The string will be converted to Morse Code
  */
-/**@snippet [Handling the data received over UART] */
 void uart_event_handle(app_uart_evt_t * p_event)
 {
     static uint8_t data_array[100];
     static uint8_t index = 0;
-    uint32_t err_code;
         
     switch (p_event->evt_type)
     {
         case APP_UART_DATA_READY:
             UNUSED_VARIABLE(app_uart_get(&data_array[index]));
-            index++;
-            if (data_array[index - 1] == 10)
+            if (data_array[index] == '\n')
             {
                 printf("%s \n",data_array);
                 printf("index = %d\n", index);
                 morse_generate((char*)data_array, index);
-                index = 0;
-                memset(data_array,0,sizeof(data_array));
             }
+            index++;
             break;    
         case APP_UART_COMMUNICATION_ERROR:
             APP_ERROR_HANDLER(p_event->data.error_communication);
@@ -77,12 +55,9 @@ void uart_event_handle(app_uart_evt_t * p_event)
             break;
     }
 }
-/**@snippet [Handling the data received over UART] */
-
 
 /**@brief  Function for initializing the UART module.
  */
-/**@snippet [UART Initialization] */
 static void uart_init(void)
 {
     uint32_t                     err_code;
@@ -105,22 +80,6 @@ static void uart_init(void)
                        err_code);
     APP_ERROR_CHECK(err_code);
 }
-/**@snippet [UART Initialization] */
-
-
-
-/**@brief Function for placing the application in low power state while waiting for events.
- */
-//static void power_manage(void)
-//{
-//    uint32_t err_code = sd_app_evt_wait();
-//    //APP_ERROR_CHECK(err_code);
-//}
-
-void buttons_leds_init(void)
-{
-    btn_led_init(APP_TIMER_PRESCALER);
-}
 
 /**@brief Function for the Event Scheduler initialization.
  */
@@ -133,21 +92,17 @@ static void scheduler_init(void)
  */
 int main(void)
 {
-    //uint32_t err_code;
-    
     // Initialize.
-    
     uart_init();
     scheduler_init();
     timer_init();
-    printf("hi hello\n");
-    buttons_leds_init();
+    led_init();
     
-        
+    printf("Hi please enter the string to be converted to morse code.\nOnly alphabets supported\n");
+    
     // Enter main loop.
     for (;;)
     {
-        //power_manage();
         app_sched_execute();
     }
 }

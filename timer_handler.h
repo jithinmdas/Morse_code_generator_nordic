@@ -1,3 +1,10 @@
+/** @file timer_handler.h
+ * @auther Jithin M Das
+ *
+ * @brief Hex file of timer_handler.c
+ * 
+ */
+
 #ifndef TIMER_HANDLER_H
 #define TIMER_HANDLER_H
 
@@ -9,6 +16,11 @@
 #define APP_TIMER_OP_QUEUE_SIZE         4 
 
 static app_timer_id_t  morse_timer_id;
+
+/**@brief   Function for initializing timers.
+ *
+ * @details This function will initialize timer needed for LED indication
+ */
 void timer_init(void);
 
 #endif // TIMER_HANDLER_H

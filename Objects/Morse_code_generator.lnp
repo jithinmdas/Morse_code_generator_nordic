@@ -1,8 +1,8 @@
 --cpu Cortex-M0
 ".\objects\main.o"
-".\objects\btn_led_handler.o"
 ".\objects\morse.o"
 ".\objects\timer_handler.o"
+".\objects\led_handler.o"
 ".\objects\arm_startup_nrf51.o"
 ".\objects\system_nrf51.o"
 ".\objects\nrf_drv_common.o"

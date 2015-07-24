@@ -1,7 +1,14 @@
+/** @file morse.c
+ * @auther Jithin M Das
+ *
+ * @brief Generates morse code
+ * 
+ */
+ 
 #include <stdio.h>
 #include <string.h>
 #include "morse.h"
-#include "btn_led_handler.h"
+#include "led_handler.h"
 #include "nrf_drv_gpiote.h"
 #include "nrf_delay.h"
 #include "timer_handler.h"
@@ -10,6 +17,10 @@ morse_code_t morse_code = INVALID;
 morse_data_t morse_data;
 uint16_t get_char_morse(char data);
 
+/**@brief   Function for calculating morse code for the string.
+ *
+ * @details This function will receive a data array and converts it to morse code and triggers the indication
+ */
 void morse_generate(char * data_array, uint8_t index)
 {
     for(int i=0 ; i<(strlen(data_array)-1) ; i++)
@@ -21,10 +32,10 @@ void morse_generate(char * data_array, uint8_t index)
     uint32_t err_code = app_timer_start(morse_timer_id, APP_TIMER_TICKS(500, APP_TIMER_PRESCALER) , NULL);
 }
 
-void morse_init(void * p_context)
-{
-   printf("hi"); 
-}
+/**@brief   Function for calculating morse code for a single character.
+ *
+ * @details This function will find and return morse code for one character
+ */
 uint16_t get_char_morse(char data)
 {
     switch(data)
@@ -134,7 +145,6 @@ uint16_t get_char_morse(char data)
             return Z;
             
         default :
-            return INVALID;
-            
+            return INVALID;      
     }
 }

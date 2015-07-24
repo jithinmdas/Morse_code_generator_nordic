@@ -1,9 +1,20 @@
+/** @file timer_handler.c
+ * @auther Jithin M Das
+ *
+ * @brief Handles timers
+ * 
+ */
+ 
 #include "timer_handler.h"
 #include "app_timer.h"
 #include "app_timer_appsh.h"
-#include "btn_led_handler.h"
+#include "led_handler.h"
 #include "morse.h"
 
+/**@brief   Function for initializing timers.
+ *
+ * @details This function will initialize timer needed for LED indication
+ */
 void timer_init()
 {
     uint32_t err_code;

@@ -1,22 +1,29 @@
+/** @file led_handler.c
+ * @auther Jithin M Das
+ *
+ * @brief Handles LED indications
+ * 
+ */
+ 
 #include <stdio.h>
 #include "nrf_drv_gpiote.h"
-#include "btn_led_handler.h"
+#include "led_handler.h"
 #include "nrf_delay.h"
 #include "bsp.h"
 #include "nordic_common.h"
 #include "morse.h"
+#include "app_timer.h"
 
-static bsp_indication_t m_stable_state;
-static uint32_t m_prescaler;
+void morse_led_indication(void * index_pointer);
 
-void morse_led_indication(void * p_variable);
-    
-void btn_led_init(uint32_t prescaler)
+/**@brief   Function for initializing LED.
+ *
+ * @details This function will configure GPIO for LED
+ */
+void led_init()
 {
     ret_code_t err_code;
-    
-    m_prescaler = prescaler;
-    
+        
     err_code = nrf_drv_gpiote_init();
     APP_ERROR_CHECK(err_code);
     
@@ -25,11 +32,15 @@ void btn_led_init(uint32_t prescaler)
     APP_ERROR_CHECK(err_code);
 }
 
+/**@brief   Function for Morse code indication.
+ *
+ * @details This function will indicate the Morse code through LED for the data from UART
+ */
 void morse_led_indication(void * index_pointer)
 {
     printf("morse code = ");
     
-    for(int j = 0; j<(morse_data.index - 1); j++)
+    for(int j = 0; j<(morse_data.index); j++)
     {
         uint16_t deviser = 1000;
         

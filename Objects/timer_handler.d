@@ -19,5 +19,5 @@
 .\objects\timer_handler.o: C:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_Libraries\3.0.0\util\app_util.h
 .\objects\timer_handler.o: C:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_DeviceFamilyPack\8.0.3\Device\Include\compiler_abstraction.h
 .\objects\timer_handler.o: E:\workspace\Keil\Nordic\Morse_code_generator_nordic\RTE\nRF_Libraries\nRF51422_xxAC\app_timer_appsh.h
-.\objects\timer_handler.o: btn_led_handler.h
+.\objects\timer_handler.o: led_handler.h
 .\objects\timer_handler.o: morse.h
