@@ -1,0 +1,22 @@
+--cpu Cortex-M0
+".\objects\main.o"
+".\objects\btn_led_handler.o"
+".\objects\morse.o"
+".\objects\arm_startup_nrf51.o"
+".\objects\system_nrf51.o"
+".\objects\nrf_drv_common.o"
+".\objects\nrf_drv_gpiote.o"
+".\objects\nrf_delay.o"
+".\objects\app_uart_fifo.o"
+".\objects\app_button.o"
+".\objects\app_error.o"
+".\objects\app_fifo.o"
+".\objects\app_timer.o"
+".\objects\nrf_assert.o"
+".\objects\retarget.o"
+".\objects\app_scheduler.o"
+".\objects\app_timer_appsh.o"
+--library_type=microlib --strict --scatter ".\Objects\Morse_code_generator.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\Morse_code_generator.map" -o .\Objects\Morse_code_generator.axf
